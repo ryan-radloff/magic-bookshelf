@@ -1,6 +1,9 @@
-<form action="/data" method = "POST">
-    <p>Name of Book <input type="text" name="name" /></p>
-    <p>ISBN <input type="text" name="isbn" /></p>
-    <p>Tags [TODO - split based on separation of commas?] <input type="text" name="tags" /></p>
-    <p><input type="submit" value="submit" /></p>
+<h1>Please inform the Bookshelf about your Book 🧐</h1>
+
+<form method="POST" action="/data">
+    {{ form.csrf_token }}
+    {{ form.title.label }} {{ form.title(size=25) }} <br>
+    {{ form.author.label }} {{ form.author(size=25) }} <br>
+    {{ form.isbn.label }} {{ form.isbn(size=25) }} <br>
+    <input type="submit" value="Go">
 </form>
