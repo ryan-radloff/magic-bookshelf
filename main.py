@@ -60,8 +60,7 @@ def create_listing():
         new_book = Book(title = request.form.get("Title"),
                         isbn = request.form.get("ISBN"),
                         author=request.form.get("Author"),
-                        # TODO: Save owner as login person
-                        owner= "dev")
+                        owner= current_user.username)
         
         db.session.add(new_book)
         db.session.commit()
