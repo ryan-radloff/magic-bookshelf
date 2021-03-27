@@ -17,10 +17,6 @@ def login():
 def signup():
     return f"<h1>Magic Book Shel - SignUp</h1>"
 
-@app.route('/list_book', methods=["GET", "POST"])
-def list_book():
-    return f"<h1>List Book for donation</h1>"
-
 
 @app.route("books/<int:id>/", methods=["GET", "POST"])
 def book(id):
