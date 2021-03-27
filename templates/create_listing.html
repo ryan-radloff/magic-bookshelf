@@ -1,0 +1,12 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- Include header -->
+
+{% block title %} List Books{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Please inform the Bookshelf about your Book 🧐</h1>
+    {{ wtf.quick_form(form, button_map={"submit": "secondary"}) }}
+</div>
+{% endblock %}
