@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request
-from forms import LoginForm, RegisterForm, BookForm, ChangePasswordForm, RequestForm
+from forms import LoginForm, RegisterForm, BookForm, ChangePasswordForm
 from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
@@ -52,7 +52,6 @@ class User(UserMixin, Base):
     username = Column(String(25), unique=True)
     password = Column(String(1000))
     credits = Column(Integer)
-    totalcredit = Column(Integer)
     is_authenticated = True
 
     def get_id(self):
@@ -81,8 +80,7 @@ class Transaction(Base):
 def index():
     # Todo: index should know if a user is logged in or not
     # and conditionally render clickables
-    # print(User.query.get(1))
-    return render_template('index.html', user=current_user)
+    return render_template('index.html')
 
 
 @app.route('/create_listing', methods=["GET", "POST"])
@@ -108,13 +106,10 @@ def create_listing():
         session.add(new_transaction)
         session.commit()
 
-        return redirect(url_for("listings"))
+        return redirect(url_for("data"))
     # Very important, make sure to initialize the field of the OWNER's
     # associated user's ID after the post request. To be handled later
     return render_template('create_listing.html', form=form)
-
-# def post_listing():
-
 
 @app.route('/data/', methods=['POST', 'GET'], strict_slashes=False)
 # apparently strict_slashes=False is required here if debug=True...
@@ -150,8 +145,6 @@ def register():
             email=form.email.data,
             username=form.username.data,
             password=hashed_salted_password,
-            credits=0,
-            totalcredit=0
         )
 
         session.add(new_user)
@@ -196,7 +189,14 @@ def show_profile(name):
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
 
-    return render_template('profile.html', current_user=current_user)
+    session = Session()
+    sells = session.query(Transaction).filter(Transaction.seller==current_user.username)
+    buys = session.query(Transaction).filter(Transaction.buyer==current_user.username)
+    credit = len(sells)
+
+    # TODO: Add title, isbn to all individual buys and sells transations
+
+    return render_template('profile.html', current_user=current_user, buys=buys, sells=sells, credit=credit)
 
 @app.route("/change_password", methods=["GET", "POST"])
 @login_required
@@ -226,31 +226,10 @@ def listings():
     session = Session()
     return render_template('book_list.html', query=session.query(Book))
 
-@app.route('/<string:id>/listing', methods=["GET", "POST"])
-def listing(id):
+@app.route('/<string:name>/listing', methods=["GET", "POST"])
+def listing(name):
     session = Session()
-    return render_template('book_info.html', book=session.query(Book).filter(Book.book_id==id).first())
-
-@app.route('/request_book/<string:id>', methods=["GET", "POST"])
-@login_required
-def request_book(id):
-    session = Session()
-    trans = session.query(Transaction).filter(Transaction.book==id).first()
-    if (trans.address_to):
-        return redirect(url_for("listings"))
-    form = RequestForm()
-    if form.validate_on_submit():
-        
-        
-        trans.address_to = form.streetNameNum.data + " " + form.city.data + ", " + form.state.data + " " + form.zipcode.data
-        trans.buyer = current_user.user_id
-
-        session.commit()
-
-        return redirect(url_for("listings"))
-    # Very important, make sure to initialize the field of the OWNER's
-    # associated user's ID after the post request. To be handled later
-    return render_template('request_book.html', form=form)
+    return render_template('book_info.html', book=session.query(Book).filter(Book.book_id==name).first())
 
 if __name__ == "__main__":
     app.run(debug=True)

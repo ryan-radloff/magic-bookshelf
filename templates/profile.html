@@ -1,38 +1,91 @@
-{% extends 'base.html' %}
+{% extends 'bootstrap/base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 <!-- Include header -->
 
 {% block title %} User Profile{% endblock %}
 
 {% block content %}
-{{ super() }}
-<div class="container paper">
-    <h1> Welcome {{ current_user.username }}!</h1>
-    <div> You are currently in possession of {{ current_user.credits }}x Stardust✨!</div>
-    <div> In total, you have made contributions totaling {{ totalcredit }}x Stardust✨;
-    thus the Bookshelf hath bestowed upon thyself the title of: <br> 
+<div class="container">
+    Inside the test html!
+    <h1> Welcome {{ current_user.username }}</h1>
+        <p>Total Credits: {{credit}}</p>
+    {% if sells or buys %}
+        {% if sells %}
+        <h2>Books Donated</h2>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Author</th>
+                    <th>Send To</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            {% for book in sells %}
+            <tr>
+                <td>
+                    <div id="{{book.title}}title"></div>
+                </td>
+                <td>
+                    {{book.isbn}}
+                </td>
+                <td>
+                    <div id="{{book.author}}"></div>
+                </td>
+                <td>
+                    <div id="{{book.address_to}}"></div>
+                </td>
+                <td>
+                {% if book.complete %}
+                    Done
+                    {% else %}
+                    In transist
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </table>
 
-    <strong>
-    {% if current_user.totalcredit < 1 %}
-        💼 initiate — let's make some magic! 
-    {% elif current_user.totalcredit < 3 %}
-        👨‍🎓 apprentice — your future seems promising...
-    {% elif current_user.totalcredit < 6 %}
-        🧝 elf librarian — the Bookshelf has deemed you worthy of a role in its maintenence.
-    {% elif current_user.totalcredit < 10 %}
-        🧙🏾 master sourcerer — regarded as masterful in the magicks of resourceful learning.
+        {% elif buys %}
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Author</th>
+                    <th>Recieved From</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            {% for book in buys %}
+            <tr>
+                <td>
+                    <div id="{{book.title}}title"></div>
+                </td>
+                <td>
+                    {{book.isbn}}
+                </td>
+                <td>
+                    <div id="{{book.author}}"></div>
+                </td>
+                <td>
+                    <div id="{{book.address_from}}"></div>
+                </td>
+                <td>
+                {% if book.complete %}
+                    Done
+                    {% else %}
+                    In transist
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </table>
+
     {% else %}
-        💀 skuller — your pursuit of knowledge has surpassed the test of life and time.
-
+    <p> No Record Found </p>
+    <p>Save Paper - Donate book / <a href="{{url_for("listings")}}"></a> Get Book</p>
     {% endif %}
-    </strong>    
-    </div>
-    <br>
-
-    <div> You may change your password <a href={{url_for("change_password")}}>here</a>.</div>
-    <div> You may logout <a href={{url_for("logout")}}>here</a>.</div>
-
 </div>
 {% endblock %}
-        apprentice 🧑‍+✨=👨‍🎓 
-            <div> </div>
