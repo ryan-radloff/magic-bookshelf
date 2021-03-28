@@ -1,8 +1,7 @@
-<html>
-  <head>
-    <title>Books API Example</title>
-  </head>
-  <body>
+{% extends 'base.html' %}
+{% block content %}
+{{super()}}
+
     <header>
         <div id="title"></div>
         <div id="author"></div>
@@ -19,9 +18,8 @@
       }
     </script>
     <script src="https://www.googleapis.com/books/v1/volumes?q=isbn:{{book.isbn}}&callback=handleResponse"></script>
-</body>
-</html>
 
+{% endblock %}
 <!--{% for book in query %}
 <p>{{book.isbn}}</p>
 {% endfor %}-->

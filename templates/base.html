@@ -1,0 +1,20 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{super()}}
+<link href='https://fonts.googleapis.com/css?family=Astloch' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Bubblegum Sans' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Bubbler One' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Handlee' rel='stylesheet'>
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='index.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="background"></div> 
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('.static', filename='index.js')}}"></script>
+{% endblock %}

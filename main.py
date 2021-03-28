@@ -64,7 +64,7 @@ def index():
     # Todo: index should know if a user is logged in or not
     # and conditionally render clickables
     # print(User.query.get(1))
-    return render_template('index.html')
+    return render_template('index.html', user=current_user)
 
 
 @app.route('/create_listing', methods=["GET", "POST"])

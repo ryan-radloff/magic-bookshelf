@@ -1,25 +1,44 @@
-{% extends 'bootstrap/base.html' %}
-
-{% block styles %}
-{{super()}}
-<link rel="stylesheet"
-      href="{{url_for('.static', filename='index.css')}}">
-{% endblock %}
-
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="background"></div> 
-<div class="container text-center">
-    <h1>Welcome to the Magic Bookshelf 📚</h1>
-
-    <div>become an apprentice🧙🏾</div>
-    <div>add a book to the magic bookshelf <a href="/create_listing">here</a></div>
-    <div>Sign in <a href="/login">here</a></div>
-    <div>View books <a href="/book_list">here</a></div>
-</div>
-{% endblock %}
-
-{% block scripts %}
 {{super()}}
-<script src="{{url_for('.static', filename='index.js')}}"></script>
+<div class="container text-center">
+    <div class="big">🎩a magical world awaits🐰</div>
+    <img src="{{url_for('.static', filename='MagicBookshelf.png')}}">
+    
+    <br>
+
+
+
+    {% if user.is_authenticated %}
+        it's nice to see you, 
+        
+        TODO: display role here based on credits.
+        apprentice 🧑‍+✨=👨‍🎓 
+            <div> master sourcerer🧙🏾</div>
+
+
+        <strong>{{user.username}}</strong>
+        <div>View books <a href={{url_for('listings')}}>here</a></div>
+        <div>add a book to the magic bookshelf <a href="/create_listing">here</a></div>
+    {% else %}
+        <div>💡 knowledge is power!</div>
+        <div>become a part of a resourceful community dedicated to lifelong learning</div>
+        <div>💖 Join the society <a href={{url_for('register')}}>here</a></div>
+        <div>💞 Returning users, enter <a href={{url_for('login')}}>here</a></div>
+    {% endif %}
+
+
+</div>
+
+
+{% with key=test %}
+    {% include 'bookshelf.html' %}
+{% endwith %}
+
+
+
+
+<img src="{{url_for('.static', filename='bookshelf.png')}}">
+<hr><img src="{{url_for('.static', filename='bookshelf.png')}}"><img src="{{url_for('.static', filename='bookshelf.png')}}">
 {% endblock %}

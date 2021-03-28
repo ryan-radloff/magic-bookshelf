@@ -8,10 +8,43 @@
 
     background: 
       radial-gradient(
-       circle at center, pink, black
+       circle at center, hsl(0, 88%, 51%), hsl(240, 100%, 25%)'
       );
   }
 
 body {
+  font-weight: bold;
+  font-family: 'Bubblegum Sans';font-size: 22px;
   color:aliceblue;
+}
+
+.paper {
+  padding: 300px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  background-image: url("scroll2.png");
+  color:black;
+}
+
+.bookshelf {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("bookshelf.png");
+  width: 1200px;
+  height: 800px;
+}
+
+.btn {
+  color:black;
+}
+
+.big {
+  font-size: 400%;
+}
+
+.clickable {
+  user-select: none;
+  cursor: pointer;
 }

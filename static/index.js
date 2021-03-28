@@ -5,6 +5,10 @@ let hue = 0;
 let mouseXpercentage;
 let mouseYpercentage;
 
+$(".growable").hover(() => {
+    $(this).removeClass("big");
+}); 
+
 $(document).mousemove(function(event) {
     mouseXpercentage = Math.round(event.pageX / w * 100);
     mouseYpercentage = Math.round(event.pageY / h * 100);
@@ -22,5 +26,6 @@ setInterval(() => {
 
 function updateBackground() {
     $('.background').css('background', 'radial-gradient(circle at ' + mouseXpercentage + '% ' 
-    + mouseYpercentage + '%, hsl(' + hue + ', 88%, 51%), hsl(' + ((hue + 180) % 360) + ', 100%, 25%)');
+    + mouseYpercentage + '%, hsl(' + hue + ', 88%, 51%), hsl(' + ((hue + 240) % 360) + ', 100%, 20%)');
 }
+
