@@ -232,6 +232,16 @@ def listing(id):
     session = Session()
     return render_template('book_info.html', book=session.query(Book).filter(Book.book_id==id).first())
 
+
+
+
+
+
+
+
+
+
+
 @app.route('/request_book/<string:id>', methods=["GET", "POST"])
 @login_required
 def request_book(id):
