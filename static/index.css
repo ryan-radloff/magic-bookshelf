@@ -13,8 +13,7 @@
   }
 
 body {
-  font-weight: bold;
-  font-family: 'Bubblegum Sans';font-size: 22px;
+  font-family: 'Bubblegum Sans';font-size: 24px;
   color:aliceblue;
 }
 
@@ -47,4 +46,9 @@ body {
 .clickable {
   user-select: none;
   cursor: pointer;
+}
+
+a, a:visited {
+  color:white;
+  font-weight:bold;
 }
