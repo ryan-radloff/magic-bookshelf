@@ -129,7 +129,6 @@ def data():
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    # TODO: If user is already Loggedin
     if current_user.is_authenticated == True:
         return redirect(url_for("index"))
 
