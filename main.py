@@ -82,7 +82,7 @@ def index():
     # Todo: index should know if a user is logged in or not
     # and conditionally render clickables
     # print(User.query.get(1))
-    return render_template('index.html', user=current_user)
+    return render_template('index.html', user=current_user, msg=request.args.get('msg'))
 
 
 @app.route('/create_listing', methods=["GET", "POST"])
@@ -108,7 +108,7 @@ def create_listing():
         session.add(new_transaction)
         session.commit()
 
-        return redirect(url_for("listings"))
+        return redirect(url_for("index", msg="The Magic Bookshelf📚 applauds your generosity! You have earned [✨Arcane Dust x1]"))
     # Very important, make sure to initialize the field of the OWNER's
     # associated user's ID after the post request. To be handled later
     return render_template('create_listing.html', form=form)
