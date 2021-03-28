@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{super()}}
+<div class="container paper">
+    <div id="price"></div>
+</div>
+<script>
+    function handleResponse(response) {
+      var item = 8.00+(parseFloat(item.rows.elements.distance.value)/150000);
+      document.getElementById("price").innerHTML += "$" + item;
+  }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={{addrfrom}}&destinations={{addrto}}&key={{key}}"></script>
+{% endblock %}
