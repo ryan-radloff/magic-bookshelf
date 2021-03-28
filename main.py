@@ -106,6 +106,9 @@ def create_listing():
         )
 
         session.add(new_transaction)
+        user = session.query(User).filter(User.user_id==current_user.user_id).first()
+        user.credits += 1
+        user.totalcredit += 1
         session.commit()
 
         return redirect(url_for("index", msg="The Magic Bookshelf📚 applauds your generosity! You have earned [✨Arcane Dust x1]"))
