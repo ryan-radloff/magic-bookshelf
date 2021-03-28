@@ -9,9 +9,11 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import os
+from os.path import join, dirname
 
 # TODO: figure out whats wrong with python-dotenv because it returns every string with quotes
-load_dotenv()
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 app = Flask(__name__)
 Base = declarative_base()
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -50,8 +52,9 @@ class User(UserMixin, Base):
     username = Column(String(25), unique=True)
     password = Column(String(1000))
     is_authenticated = True
+
     def get_id(self):
-           return (self.user_id)
+        return (self.user_id)
 
 class Book(Base):
     __tablename__ = 'books'
@@ -75,8 +78,8 @@ def index():
 def create_listing():
     form = BookForm()
     if form.validate_on_submit():
-        new_book = Book(isbn = int(form.isbn.data),
-                        owner= current_user.user_id)
+        new_book = Book(isbn=int(form.isbn.data),
+                        owner=current_user.user_id)
         session = Session()
         session.add(new_book)
         session.commit()
@@ -124,7 +127,7 @@ def register():
             username=form.username.data,
             password=hashed_salted_password,
         )
-        
+
         session.add(new_user)
         session.commit()
         login_user(new_user)
@@ -180,5 +183,3 @@ def listing(name):
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
