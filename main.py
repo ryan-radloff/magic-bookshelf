@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, url_for, request
 from forms import LoginForm, RegisterForm, BookForm
 from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-#from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, Column, Integer, String
