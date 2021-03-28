@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block content %}
@@ -9,6 +10,14 @@
     <br>
 
 
+=======
+{% extends 'bootstrap/base.html' %}
+<!-- Include header -->
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to the Magic Bookshelf 📚</h1>
+>>>>>>> 3a17dc923528f31e94ac3baa18a98ab09e3903f5
 
     {% if user.is_authenticated %}
         it's nice to see you, 
@@ -30,6 +39,7 @@
 
 
 </div>
+<<<<<<< HEAD
 
 
 {% with key=test %}
@@ -42,3 +52,6 @@
 <img src="{{url_for('.static', filename='bookshelf.png')}}">
 <hr><img src="{{url_for('.static', filename='bookshelf.png')}}"><img src="{{url_for('.static', filename='bookshelf.png')}}">
 {% endblock %}
+=======
+{% endblock %}
+>>>>>>> 3a17dc923528f31e94ac3baa18a98ab09e3903f5
