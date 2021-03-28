@@ -27,12 +27,23 @@ body {
   color:black;
 }
 
+#bookshelfHolderTop {
+  padding:auto;
+  margin:auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("topshelf.png");
+  width: 200%;
+  height: 200%;
+}
+
 .bookshelf {
+  padding:auto;
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url("bookshelf.png");
-  width: 1200px;
-  height: 800px;
+  width: 200%;
+  height: 200%;
 }
 
 .btn {

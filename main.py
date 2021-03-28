@@ -195,8 +195,10 @@ def show_profile(name):
     # DO not login in if alredy logged in
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
-
-    return render_template('profile.html', current_user=current_user)
+        
+    session = Session()
+    ob=session.query(Book).filter(Book.owner == current_user.user_id)
+    return render_template('profile.html', current_user=current_user, owned_books=ob)
 
 @app.route("/change_password", methods=["GET", "POST"])
 @login_required
