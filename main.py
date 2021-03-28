@@ -261,7 +261,7 @@ def about():
     return render_template(about.html, session.query(Books).count())
 
 @app.route('/success', methods=["GET", "POST"])
-def success:
+def success():
     trans = request.args.get('trans', None)
     addrfrom = trans.address_from
     addrto = trans.address_to
