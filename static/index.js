@@ -6,7 +6,8 @@ let mouseXpercentage;
 let mouseYpercentage;
 
 $(".growable").hover(() => {
-    $(this).removeClass("big");
+    console.log()
+    $(this).addClass("big");
 }); 
 
 $(document).mousemove(function(event) {

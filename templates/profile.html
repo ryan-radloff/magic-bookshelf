@@ -1,12 +1,38 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 <!-- Include header -->
 
 {% block title %} User Profile{% endblock %}
 
 {% block content %}
-<div class="container">
-    Inside the test html!
-    <h1> Welcome {{ current_user.username }}</h1>
+{{ super() }}
+<div class="container paper">
+    <h1> Welcome {{ current_user.username }}!</h1>
+    <div> You are currently in possession of {{ current_user.credits }}x Stardust✨!</div>
+    <div> In total, you have made contributions totaling {{ totalcredit }}x Stardust✨;
+    thus the Bookshelf hath bestowed upon thyself the title of: <br> 
+
+    <strong>
+    {% if current_user.totalcredit < 1 %}
+        💼 initiate — let's make some magic! 
+    {% elif current_user.totalcredit < 3 %}
+        👨‍🎓 apprentice — your future seems promising...
+    {% elif current_user.totalcredit < 6 %}
+        🧝 elf librarian — the Bookshelf has deemed you worthy of a role in its maintenence.
+    {% elif current_user.totalcredit < 10 %}
+        🧙🏾 master sourcerer — regarded as masterful in the magicks of resourceful learning.
+    {% else %}
+        💀 skuller — your pursuit of knowledge has surpassed the test of life and time.
+
+    {% endif %}
+    </strong>    
+    </div>
+    <br>
+
+    <div> You may change your password <a href={{url_for("change_password")}}>here</a>.</div>
+    <div> You may logout <a href={{url_for("logout")}}>here</a>.</div>
+
 </div>
 {% endblock %}
+        apprentice 🧑‍+✨=👨‍🎓 
+            <div> </div>

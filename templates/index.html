@@ -11,14 +11,8 @@
 
 
     {% if user.is_authenticated %}
-        it's nice to see you, 
-        
-        TODO: display role here based on credits.
-        apprentice 🧑‍+✨=👨‍🎓 
-            <div> master sourcerer🧙🏾</div>
-
-
-        <strong>{{user.username}}</strong>
+        it's nice to see you, <strong>{{user.username}}</strong>!
+        <div>Visit your profile <a href={{url_for('show_profile', name=user.username)}}>here</a></div>
         <div>View books <a href={{url_for('listings')}}>here</a></div>
         <div>add a book to the magic bookshelf <a href="/create_listing">here</a></div>
     {% else %}
