@@ -52,6 +52,7 @@ class User(UserMixin, Base):
     username = Column(String(25), unique=True)
     password = Column(String(1000))
     credits = Column(Integer)
+    totalcredit = Column(Integer)
     is_authenticated = True
 
     def get_id(self):
@@ -80,12 +81,8 @@ class Transaction(Base):
 def index():
     # Todo: index should know if a user is logged in or not
     # and conditionally render clickables
-<<<<<<< HEAD
     # print(User.query.get(1))
     return render_template('index.html', user=current_user)
-=======
-    return render_template('index.html')
->>>>>>> 3a17dc923528f31e94ac3baa18a98ab09e3903f5
 
 
 @app.route('/create_listing', methods=["GET", "POST"])
@@ -153,6 +150,8 @@ def register():
             email=form.email.data,
             username=form.username.data,
             password=hashed_salted_password,
+            credits=0,
+            totalcredit=0
         )
 
         session.add(new_user)
