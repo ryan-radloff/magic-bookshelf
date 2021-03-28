@@ -17,7 +17,7 @@ load_dotenv()
 app = Flask(__name__)
 Base = declarative_base()
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-
+API_KEY=os.getenv('KEY')
 Bootstrap(app)
 
 Session = sessionmaker()
@@ -243,16 +243,32 @@ def request_book(id):
     form = RequestForm()
     if form.validate_on_submit():
         
-        
-        trans.address_to = form.streetNameNum.data + " " + form.city.data + ", " + form.state.data + " " + form.zipcode.data
+        address = form.streetNameNum.data + " " + form.city.data + ", " + form.state.data + " " + form.zipcode.data
+        trans.address_to = address
         trans.buyer = current_user.user_id
 
         session.commit()
 
-        return redirect(url_for("listings"))
+        return redirect(url_for("success", trans=trans))
     # Very important, make sure to initialize the field of the OWNER's
     # associated user's ID after the post request. To be handled later
     return render_template('request_book.html', form=form)
+
+
+@app.route('/about', methods=["GET", "POST"])
+def about():
+    session = Session()
+    return render_template(about.html, session.query(Books).count())
+
+@app.route('/success', methods=["GET", "POST"])
+def success:
+    trans = request.args.get('trans', None)
+    addrfrom = trans.address_from
+    addrto = trans.address_to
+    return render_template(success.html, addrfrom=addrfrom, addrto=addrto, key=API_KEY)
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -3,7 +3,7 @@
 {% block content %}
 {{super()}}
 <div class="container text-center">
-    <div class="big">🎩a magical world awaits🐰</div>
+    <div class="big" style="padding-top:4%">🎩a magical world awaits🐰</div>
     <img src="{{url_for('.static', filename='MagicBookshelf.png')}}">
     
     <br>
@@ -30,10 +30,4 @@
 {% with key=test %}
     {% include 'bookshelf.html' %}
 {% endwith %}
-
-
-
-
-<img src="{{url_for('.static', filename='bookshelf.png')}}">
-<hr><img src="{{url_for('.static', filename='bookshelf.png')}}"><img src="{{url_for('.static', filename='bookshelf.png')}}">
 {% endblock %}
