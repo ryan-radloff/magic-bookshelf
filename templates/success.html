@@ -3,13 +3,17 @@
 {% block content %}
 {{super()}}
 <div class="container paper">
+<<<<<<< HEAD
     <div id="price"></div>
 </div>
 
+=======
+    <div id="price">Test</div>
+</div>
+>>>>>>> a18afe627451cd857f529efa5d9f2eb48187d8a8
 <script>
     function handleResponse(response) {
-      var item = 8.00+(parseFloat(item.rows.elements.distance.value)/150000);
-      document.getElementById("price").innerHTML += <h3>"Estimated shipping: $" + item</h3>;
+      document.getElementById("price").innerHTML += "Workfarme";
   }
   </script>
   <script src="https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={{addrfrom}}&destinations={{addrto}}&key={{key}}&callback=handleResponse"></script>

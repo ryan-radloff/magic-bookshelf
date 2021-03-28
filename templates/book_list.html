@@ -68,10 +68,10 @@
 {% for book in query %}
     <tr>
         <td>
-            <div id="{{book.isbn}}title"></div>
+            <div id="{{book.book_id}}title"></div>
         </td>
         <td>
-            <div id="{{book.isbn}}author"></div>
+            <div id="{{book.book_id}}author"></div>
         </td>
         <td>
             {{book.isbn}}
@@ -83,8 +83,8 @@
     <script>
         function handleResponse(response) {
           var item = response.items[0];
-          document.getElementById("{{book.isbn}}title").innerHTML += item.volumeInfo.title;
-          document.getElementById("{{book.isbn}}author").innerHTML += item.volumeInfo.authors;
+          document.getElementById("{{book.book_id}}title").innerHTML += item.volumeInfo.title;
+          document.getElementById("{{book.book_id}}author").innerHTML += item.volumeInfo.authors;
       }
       </script>
       <script src="https://www.googleapis.com/books/v1/volumes?q=isbn:{{book.isbn}}&callback=handleResponse"></script>
