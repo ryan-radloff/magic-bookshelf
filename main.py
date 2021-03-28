@@ -198,7 +198,7 @@ def show_profile(name):
         
     session = Session()
     ob=session.query(Book).filter(Book.owner == current_user.user_id)
-    return render_template('profile.html', current_user=current_user, owned_books=ob)
+    return render_template('profile.html', current_user=current_user, owned_books=ob, bkrsrc=url_for('.static', filename='bookshelf.png'))
 
 @app.route("/change_password", methods=["GET", "POST"])
 @login_required
@@ -246,10 +246,10 @@ def request_book(id):
         address = form.streetNameNum.data + " " + form.city.data + ", " + form.state.data + " " + form.zipcode.data
         trans.address_to = address
         trans.buyer = current_user.user_id
-
+        addressf = trans.address_from
         session.commit()
 
-        return redirect(url_for("success", trans=trans))
+        return redirect(url_for("success", addrto=address, addrfrom=addressf))
     # Very important, make sure to initialize the field of the OWNER's
     # associated user's ID after the post request. To be handled later
     return render_template('request_book.html', form=form)
@@ -258,14 +258,13 @@ def request_book(id):
 @app.route('/about', methods=["GET", "POST"])
 def about():
     session = Session()
-    return render_template(about.html, session.query(Books).count())
+    return render_template("about.html", session.query(Books).count())
 
 @app.route('/success', methods=["GET", "POST"])
 def success():
-    trans = request.args.get('trans', None)
-    addrfrom = trans.address_from
-    addrto = trans.address_to
-    return render_template(success.html, addrfrom=addrfrom, addrto=addrto, key=API_KEY)
+    addrto = request.args.get('addrto', None)
+    addrfrom = request.args.get('addrfrom', None)
+    return render_template("success.html", addrfrom=addrfrom, addrto=addrto, key=API_KEY)
 
 
 

@@ -22,8 +22,9 @@
         <div>💞 Returning users, enter <a href={{url_for('login')}}>here</a></div>
     {% endif %}
 
+{% if msg %}
     {{ msg }}
-
+{% endif %}
 </div>
 
 

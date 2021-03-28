@@ -31,46 +31,55 @@
 
     <div> You may change your password <a href={{url_for("change_password")}}>here</a>.</div>
     <div> You may logout <a href={{url_for("logout")}}>here</a>.</div>
+    <div> Back home <a href={{url_for("index")}}>here</a>!</div>
 
     <div> You may view your currently listed books below. </div>
-    
-
-
 </div>
 
-<div style="text-align: center; width=80%">
     
-    <div id="bookshelfHolder" class="text-center" style="width=100%; display:inline-block">
-       <div id="bookshelfHolderTop">aa</div>
-    
+<div id="bookshelfHolder">
+    <div class="parent">
+      <img class="bkshlf" src={{url_for('.static', filename='bookshelf.png')}} />
+
     </div>
 </div>
 
 
+
 {% for book in owned_books %} 
     {# <div> {{book.book_id}} : on i =  {{ loop.index }} <img src={{book.png}}> </div>  LOOP INDEX IS 1 INDEXED. #}
-    {% if loop.index % 3 == 1%}
+
+    {% if (loop.index - 1) % 9 == 0 %}
         
         <script>
-        console.log("created at " + {{loop.index}});
+        console.log( bkrsrc );
         var bookshelf = document.createElement("div");
-        bookshelf.classList.add("bookshelf");
-        document.getElementById("bookshelfHolder").appendChild(bookshelf);
+        bookshelf.classList.add("parent");
+        let bkshlf = document.createElement("img");
+        bkshlf.classList.add("bkshlf");
+        bkshlf.src = {{ bkrsrc }};
+        bookshelf.appendChild(bkshlf);
+        document.getElementById("bookshelfHolder").appendChild(bookshelf);   
         </script>
+        
     {% endif %}
     
     <script>
         function handleResponse(response) {
             var item = response.items[0];
             var bookElem = document.createElement("div");
+            bookElem.classList.add("bk" + {{(loop.index - 1) % 9}});
             var img = document.createElement("img");
             img.src = item.volumeInfo.imageLinks.thumbnail;
+            img.style = "height: 33%";
             img.addEventListener("click", ()=> {
                 location.href = '../' + {{book.book_id}} + '/listing';
                 //location.href = '/request_book/' + {{book.book_id}};
             })
             bookElem.appendChild(img);
-            var bookshelves = document.getElementsByClassName("bookshelf");
+            bookElem.appendChild(document.createElement("br"));
+            bookElem.appendChild(document.createElement("br"));
+            var bookshelves = document.getElementsByClassName("parent");
             bookshelves[bookshelves.length - 1].appendChild(bookElem);
 
         }
