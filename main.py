@@ -53,6 +53,7 @@ class User(UserMixin, Base):
     password = Column(String(1000))
     credits = Column(Integer)
     totalcredit = Column(Integer)
+    png = Column(String(1000))
     is_authenticated = True
 
     def get_id(self):
