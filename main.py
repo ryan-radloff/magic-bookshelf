@@ -174,5 +174,12 @@ def listing(name):
     session = Session()
     return render_template('book_info.html', book=session.query(Book).filter(Book.book_id==name).first())
 
+@app.route('/request_book/<string:id>', methods=["GET", "POST"])
+@login_required
+def order_book(name):
+    session = Session()
+    return render_template('request_book.html', book=session.query(Book).filter(Book.book_id==name).first())
+
+
 if __name__ == "__main__":
     app.run(debug=True)
