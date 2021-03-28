@@ -5,7 +5,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import os
@@ -61,9 +61,19 @@ class Book(Base):
     __tablename__ = 'books'
     book_id = Column(Integer, primary_key=True)
     isbn = Column(Integer)
-    owner = Column(Integer)
+    owner = Column(Integer, ForeignKey('user_id'))
 # Below required once, when creating DB. 
 # db.create_all()
+
+class Transaction(Base):
+    __tablename__ = 'transactions'
+    transaction_id = Column(Integer, primary_key=True)
+    address_to = Column(String(100))
+    address_from = Column(String(100))
+    complete = Column(Boolean)
+    seller = Column(Integer, ForeignKey('user_id'))
+    buyer = Column(Integer, ForeignKey('user_id'))
+    book = Column(Integer, ForeignKey('book_id'))
 
 
 @app.route('/', methods = ["GET", "POST"])
