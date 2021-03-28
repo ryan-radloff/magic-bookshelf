@@ -52,6 +52,7 @@ class User(UserMixin, Base):
     username = Column(String(25), unique=True)
     password = Column(String(1000))
     credits = Column(Integer)
+    totalcredit = Column(Integer)
     is_authenticated = True
 
     def get_id(self):
@@ -149,6 +150,8 @@ def register():
             email=form.email.data,
             username=form.username.data,
             password=hashed_salted_password,
+            credits=0,
+            totalcredit=0
         )
 
         session.add(new_user)
