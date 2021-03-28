@@ -1,0 +1,17 @@
+.background {
+    position:fixed;
+    top:0px;
+    left:0px;
+    height:100%;
+    width:100%;
+    z-index:-1;
+
+    background: 
+      radial-gradient(
+       circle at center, pink, black
+      );
+  }
+
+body {
+  color:aliceblue;
+}
