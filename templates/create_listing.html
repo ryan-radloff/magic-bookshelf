@@ -1,14 +1,15 @@
-{% extends 'bootstrap/base.html' %}
+{% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 <!-- Include header -->
 
 {% block title %} List Books{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Please inform the Bookshelf about your Book 🧐</h1>
+{{super()}}
+<div class="container paper">
+    <h1> {{msg}} </h1>
+    <h1>Please inform the Bookshelf about your Book + Location 🧐</h1>
     {{ wtf.quick_form(form, button_map={"submit": "secondary"}) }}
 </div>
 {% endblock %}
 
-The Magic Bookshelf📚 applauds your generosity! You have earned [✨Arcane Dust x1]

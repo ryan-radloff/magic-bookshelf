@@ -66,7 +66,8 @@
             var img = document.createElement("img");
             img.src = item.volumeInfo.imageLinks.thumbnail;
             img.addEventListener("click", ()=> {
-                location.href = '/request_book/' + {{book.book_id}};
+                location.href = '../' + {{book.book_id}} + '/listing';
+                //location.href = '/request_book/' + {{book.book_id}};
             })
             bookElem.appendChild(img);
             var bookshelves = document.getElementsByClassName("bookshelf");
