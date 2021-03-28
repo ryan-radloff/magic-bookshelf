@@ -11,7 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import os
 from os.path import join, dirname
 
-# TODO: figure out whats wrong with python-dotenv because it returns every string with quotes
+
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 app = Flask(__name__)
@@ -22,17 +22,11 @@ Bootstrap(app)
 
 Session = sessionmaker()
 # Sqlalchamy database
-# TODO: Change the SQL database when done
 s = "mysql+mysqlconnector://{username}:{password}@{server}/bookshelf_db".format(username = "root", password = os.getenv('PASSWORD'), server = "104.197.168.142:3306")
 engine = create_engine(s)
 engine.connect()
 
-
 Session.configure(bind=engine)
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://{username}:{password}@{server}/bookshelf_db".format(username = "root", password = "p@xs8Ddz4.YVT-QweUZE", server = "104.197.168.142:3306")
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#db = SQLAlchemy(app)
 
 # Login 
 login_manager = LoginManager()
