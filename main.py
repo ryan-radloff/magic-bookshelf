@@ -248,18 +248,18 @@ def request_book(id):
         trans.buyer = current_user.user_id
         addressf = trans.address_from
         session.commit()
-
-        return redirect(url_for("success", addrto=address, addrfrom=addressf))
+        return redirect(url_for("index"))
     # Very important, make sure to initialize the field of the OWNER's
     # associated user's ID after the post request. To be handled later
     return render_template('request_book.html', form=form)
 
-
+#TODO: implement the about page
 @app.route('/about', methods=["GET", "POST"])
 def about():
     session = Session()
     return render_template("about.html", session.query(Books).count())
 
+#TODO: implement the success page once distance matrix decides to work
 @app.route('/success', methods=["GET", "POST"])
 def success():
     addrto = request.args.get('addrto', None)
