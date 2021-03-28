@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'bootstrap/base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
+<!-- Include header -->
 
 {% block title %} Login{% endblock %}
 
 {% block content %}
-{{ super() }}
-<div class="container paper">
-    Welcome back, please verify your identity! 🧐
+<div class="container">
+    <h1>Please Loing in the Bookshelf to get started 🧐</h1>
     <p> {{msg}}</p>
     {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "secondary"}) }}
 </div>
