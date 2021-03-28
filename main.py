@@ -5,7 +5,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, Column, Integer, String, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import os
@@ -51,7 +51,7 @@ class User(UserMixin, Base):
     email = Column(String(250))
     username = Column(String(25), unique=True)
     password = Column(String(1000))
-    credit = Column(Integer)
+    credits = Column(Integer)
     is_authenticated = True
 
     def get_id(self):
@@ -61,7 +61,7 @@ class Book(Base):
     __tablename__ = 'books'
     book_id = Column(Integer, primary_key=True)
     isbn = Column(Integer)
-    owner = Column(Integer, ForeignKey('user_id'))
+    owner = Column(Integer, ForeignKey('users.user_id'))
 # Below required once, when creating DB. 
 # db.create_all()
 
@@ -71,9 +71,9 @@ class Transaction(Base):
     address_to = Column(String(100))
     address_from = Column(String(100))
     complete = Column(Boolean)
-    seller = Column(Integer, ForeignKey('user_id'))
-    buyer = Column(Integer, ForeignKey('user_id'))
-    book = Column(Integer, ForeignKey('book_id'))
+    seller = Column(Integer, ForeignKey('users.user_id'))
+    buyer = Column(Integer, ForeignKey('users.user_id'))
+    book = Column(Integer, ForeignKey('books.book_id'))
 
 
 @app.route('/', methods = ["GET", "POST"])
@@ -88,10 +88,22 @@ def index():
 def create_listing():
     form = BookForm()
     if form.validate_on_submit():
-        new_book = Book(isbn=int(form.isbn.data),
-                        owner=current_user.user_id)
+        new_book = Book(
+            isbn=int(form.isbn.data),
+            owner=current_user.user_id
+        )
+
         session = Session()
         session.add(new_book)
+        session.commit()
+        
+        new_transaction = Transaction(
+            seller=current_user.user_id,
+            book=new_book.book_id,
+            address_from=form.streetNameNum.data + " " + form.city.data + ", " + form.state.data + " " + form.zipcode.data
+        )
+
+        session.add(new_transaction)
         session.commit()
 
         return redirect(url_for("data"))
