@@ -1,15 +1,8 @@
 {% extends 'bootstrap/base.html' %}
-
-{% block styles %}
-{{super()}}
-<link rel="stylesheet"
-      href="{{url_for('.static', filename='index.css')}}">
-{% endblock %}
-
+<!-- Include header -->
 
 {% block content %}
-<div class="background"></div> 
-<div class="container text-center">
+<div class="container">
     <h1>Welcome to the Magic Bookshelf 📚</h1>
 
     <div>become an apprentice🧙🏾</div>
@@ -17,9 +10,4 @@
     <div>Sign in <a href="/login">here</a></div>
     <div>View books <a href="/book_list">here</a></div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-{{super()}}
-<script src="{{url_for('.static', filename='index.js')}}"></script>
 {% endblock %}

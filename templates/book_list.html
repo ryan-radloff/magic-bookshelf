@@ -1,7 +1,6 @@
-<table>
+<table style="width:100%">
     <thead>
         <tr>
-            <th>Thumbnail</th>
             <th>Title</th>
             <th>Author</th>
             <th>ISBN</th>
@@ -10,9 +9,6 @@
     </thead>
 {% for book in query %}
     <tr>
-        <td>
-            <div id="{{book.isbn}}thumbnail"></div>
-        </td>
         <td>
             <div id="{{book.isbn}}title"></div>
         </td>
@@ -29,7 +25,6 @@
     <script>
         function handleResponse(response) {
           var item = response.items[0];
-          document.getElementById("{{book.isbn}}thumbnail").innerHTML += "<img src=" + item.volumeInfo.imageLinks.thumbnail + ">";
           document.getElementById("{{book.isbn}}title").innerHTML += item.volumeInfo.title;
           document.getElementById("{{book.isbn}}author").innerHTML += item.volumeInfo.authors;
       }
