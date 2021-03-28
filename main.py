@@ -13,7 +13,7 @@ from os.path import join, dirname
 
 # TODO: figure out whats wrong with python-dotenv because it returns every string with quotes
 # dotenv_path = join(dirname(__file__), '.env')
-# load_dotenv(dotenv_path)
+load_dotenv()
 app = Flask(__name__)
 Base = declarative_base()
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -26,9 +26,9 @@ Session = sessionmaker()
 s = "mysql+mysqlconnector://{username}:{password}@{server}/bookshelf_db".format(username = "root", password = os.getenv('PASSWORD'), server = "104.197.168.142:3306")
 engine = create_engine(s)
 engine.connect()
+Session.configure(bind=engine)
 
 
-# Session.configure(bind=engine)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://{username}:{password}@{server}/bookshelf_db".format(username = "root", password = "p@xs8Ddz4.YVT-QweUZE", server = "104.197.168.142:3306")
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -51,6 +51,7 @@ class User(UserMixin, Base):
     email = Column(String(250))
     username = Column(String(25), unique=True)
     password = Column(String(1000))
+    credit = Column(Integer)
     is_authenticated = True
 
     def get_id(self):
@@ -69,7 +70,7 @@ class Book(Base):
 def index():
     # Todo: index should know if a user is logged in or not
     # and conditionally render clickables
-    return render_template('index.html', current_user)
+    return render_template('index.html')
 
 
 @app.route('/create_listing', methods=["GET", "POST"])
@@ -162,6 +163,7 @@ def login():
 
 
 @app.route("/<string:name>/profile")
+@login_required
 def show_profile(name):
 
     # DO not login in if alredy logged in
@@ -175,14 +177,15 @@ def show_profile(name):
 def change_password():
     form = ChangePasswordForm()
     session = Session()
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         hashed_salted_password = generate_password_hash(
             form.password.data,
             method='pbkdf2:sha256',
             salt_length=10
         )
         # Test the below line of code
-        current_user.password = hashed_salted_password
+        user = session.query(User).filter(User.user_id==current_user.user_id).first()
+        user.password = hashed_salted_password
         session.commit()
         return redirect(url_for("index"))
     return render_template("change_password.html", form = form)
