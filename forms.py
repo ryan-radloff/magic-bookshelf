@@ -35,3 +35,9 @@ class BookForm(FlaskForm):
     zipcode = StringField("Zip", validators=[DataRequired(), Regexp("\d{5}")])
     submit = SubmitField("Submit")
 
+class RequestForm(FlaskForm):
+    streetNameNum = StringField("Street", validators=[DataRequired()])
+    city = StringField("City", validators=[DataRequired()])
+    state = StringField("State", validators=[DataRequired(), Regexp("\w{2}")])
+    zipcode = StringField("Zip", validators=[DataRequired(), Regexp("\d{5}")])
+    submit = SubmitField("Submit")

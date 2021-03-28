@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
-from forms import LoginForm, RegisterForm, BookForm, ChangePasswordForm
+from forms import LoginForm, RegisterForm, BookForm, ChangePasswordForm, RequestForm
 from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
@@ -106,7 +106,7 @@ def create_listing():
         session.add(new_transaction)
         session.commit()
 
-        return redirect(url_for("data"))
+        return redirect(url_for("listings"))
     # Very important, make sure to initialize the field of the OWNER's
     # associated user's ID after the post request. To be handled later
     return render_template('create_listing.html', form=form)
@@ -222,10 +222,31 @@ def listings():
     session = Session()
     return render_template('book_list.html', query=session.query(Book))
 
-@app.route('/<string:name>/listing', methods=["GET", "POST"])
-def listing(name):
+@app.route('/<string:id>/listing', methods=["GET", "POST"])
+def listing(id):
     session = Session()
-    return render_template('book_info.html', book=session.query(Book).filter(Book.book_id==name).first())
+    return render_template('book_info.html', book=session.query(Book).filter(Book.book_id==id).first())
+
+@app.route('/request_book/<string:id>', methods=["GET", "POST"])
+@login_required
+def request_book(id):
+    session = Session()
+    trans = session.query(Transaction).filter(Transaction.book==id).first()
+    if (trans.address_to):
+        return redirect(url_for("listings"))
+    form = RequestForm()
+    if form.validate_on_submit():
+        
+        
+        trans.address_to = form.streetNameNum.data + " " + form.city.data + ", " + form.state.data + " " + form.zipcode.data
+        trans.buyer = current_user.user_id
+
+        session.commit()
+
+        return redirect(url_for("listings"))
+    # Very important, make sure to initialize the field of the OWNER's
+    # associated user's ID after the post request. To be handled later
+    return render_template('request_book.html', form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
