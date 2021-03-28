@@ -11,14 +11,12 @@
     <div id="thumbnail"></div>
     <script>
       function handleResponse(response) {
-      for (var i = 0; i < response.items.length; i++) {
-        var item = response.items[i];
+        var item = response.items[0];
         // in production code, item.text should have the HTML entities escaped.
         document.getElementById("thumbnail").innerHTML += "<img src=" + item.volumeInfo.imageLinks.thumbnail + ">";
         document.getElementById("title").innerHTML += "<h3>" + item.volumeInfo.title + "</h3>";
         document.getElementById("author").innerHTML +="<h4>" + item.volumeInfo.authors + "</h4>";
       }
-    }
     </script>
     <script src="https://www.googleapis.com/books/v1/volumes?q=isbn:{{book.isbn}}&callback=handleResponse"></script>
 </body>

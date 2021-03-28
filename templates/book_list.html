@@ -24,11 +24,9 @@
     </tr>
     <script>
         function handleResponse(response) {
-        for (var i = 0; i < response.items.length; i++) {
-          var item = response.items[i];
+          var item = response.items[0];
           document.getElementById("{{book.isbn}}title").innerHTML += item.volumeInfo.title;
           document.getElementById("{{book.isbn}}author").innerHTML += item.volumeInfo.authors;
-        }
       }
       </script>
       <script src="https://www.googleapis.com/books/v1/volumes?q=isbn:{{book.isbn}}&callback=handleResponse"></script>
