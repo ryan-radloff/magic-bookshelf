@@ -5,7 +5,7 @@ You can find the project on Devpost here: https://devpost.com/software/placehold
 
 ## Workflows
 1. Clone the git repository.
-2. ~~ Install dependencies manually or using pip install -r requirements.txt :( `pip install {flask, flask_wtf, wtforms, flask_login, sqlalchemy, mysql-connector-python, email_validator, flask_bootstrap, python-dotenv, requests}` ~~ Make sure to utilize the frozen dependencies list from requirements.txt for pip install within a virtual environment.
+2. ~~Install dependencies manually or using pip install -r requirements.txt :(~~ Make sure to utilize the frozen dependencies list from requirements.txt for pip install within a virtual environment.
 ```
 (virtualenv) $ pip freeze > requirements.txt
 $ cd copied-project/
